@@ -13,7 +13,6 @@
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
         }
-        /* Custom scrollbar para mejor estética */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -63,7 +62,6 @@
 
     <!-- PANTALLAS DE AUTENTICACIÓN -->
     <div id="auth-layout" class="h-full flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800">
-        
         <!-- Login View -->
         <div id="view-login" class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md fade-in">
             <div class="text-center mb-8">
@@ -124,7 +122,6 @@
 
     <!-- APLICACIÓN PRINCIPAL (Autenticado) -->
     <div id="app-layout" class="h-full hidden flex w-full">
-        
         <!-- Sidebar -->
         <aside class="w-64 bg-slate-900 text-white flex flex-col hidden md:flex transition-all duration-300">
             <div class="h-16 flex items-center px-6 border-b border-slate-700">
@@ -201,6 +198,26 @@
                     </div>
                 </section>
 
+                <!-- NUEVA VISTA: HISTORIAL DEL ESTUDIANTE -->
+                <section id="view-student-history" class="app-view hidden fade-in">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Historial de Tutorías</h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-100 text-sm text-gray-500">
+                                    <th class="p-4 font-medium">Materia</th>
+                                    <th class="p-4 font-medium">Tutor</th>
+                                    <th class="p-4 font-medium">Fecha</th>
+                                    <th class="p-4 font-medium">Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-history-table">
+                                <!-- Generado por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
                 <!-- =================== VISTAS TUTOR =================== -->
                 <section id="view-tutor-requests" class="app-view hidden fade-in">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Solicitudes Entrantes</h2>
@@ -226,6 +243,19 @@
                                 <!-- Generado por JS -->
                             </tbody>
                         </table>
+                    </div>
+                </section>
+
+                <!-- NUEVA VISTA: DISPONIBILIDAD DEL TUTOR -->
+                <section id="view-tutor-availability" class="app-view hidden fade-in">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Mi Disponibilidad</h2>
+                        <button onclick="addAvailability()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 shadow-sm flex items-center">
+                            <i class="ph ph-plus mr-2"></i> Añadir Bloque
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="tutor-availability-list">
+                        <!-- Generado por JS -->
                     </div>
                 </section>
 
@@ -286,6 +316,29 @@
                     </div>
                 </section>
 
+                <!-- NUEVA VISTA: RESERVAS DEL COORDINADOR -->
+                <section id="view-coord-reservations" class="app-view hidden fade-in">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Gestión Global de Reservas</h2>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-100 text-sm text-gray-500">
+                                    <th class="p-4 font-medium">Fecha/Hora</th>
+                                    <th class="p-4 font-medium">Estudiante</th>
+                                    <th class="p-4 font-medium">Materia</th>
+                                    <th class="p-4 font-medium">Estado</th>
+                                    <th class="p-4 font-medium text-right">Intervención</th>
+                                </tr>
+                            </thead>
+                            <tbody id="coord-reservations-table">
+                                <!-- Generado por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
                 <!-- =================== VISTAS ADMINISTRADOR =================== -->
                 <section id="view-admin-users" class="app-view hidden fade-in">
                     <div class="flex justify-between items-center mb-6">
@@ -312,12 +365,35 @@
                     </div>
                 </section>
 
-                <!-- Placeholder para vistas no implementadas por completo -->
-                <section id="view-placeholder" class="app-view hidden fade-in">
-                    <div class="flex flex-col items-center justify-center h-64 text-gray-400">
-                        <i class="ph ph-wrench text-5xl mb-4"></i>
-                        <h2 class="text-xl font-medium">Módulo en construcción</h2>
-                        <p class="text-sm mt-2">Esta vista pertenece al prototipo pero no contiene interacciones complejas aún.</p>
+                <!-- NUEVA VISTA: CATÁLOGOS DEL ADMIN -->
+                <section id="view-admin-catalogs" class="app-view hidden fade-in">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Catálogos del Sistema</h2>
+                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 shadow-sm flex items-center">
+                            <i class="ph ph-plus mr-2"></i> Nuevo Registro
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="admin-catalogs-content">
+                        <!-- Generado por JS -->
+                    </div>
+                </section>
+
+                <!-- NUEVA VISTA: BITÁCORAS DEL ADMIN -->
+                <section id="view-admin-logs" class="app-view hidden fade-in">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Bitácoras de Auditoría</h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-100 text-sm text-gray-500">
+                                    <th class="p-4 font-medium">Fecha y Hora</th>
+                                    <th class="p-4 font-medium">Usuario</th>
+                                    <th class="p-4 font-medium">Acción Realizada</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-logs-table">
+                                <!-- Generado por JS -->
+                            </tbody>
+                        </table>
                     </div>
                 </section>
 
@@ -335,7 +411,7 @@
             { id: 3, email: 'tutor@utp.ac.pa', pass: '123', name: 'Juan Tutor', role: 'tutor', status: 'active' },
             { id: 4, email: 'estudiante@utp.ac.pa', pass: '123', name: 'Ana Estudiante', role: 'student' },
             { id: 5, email: 'tutor2@utp.ac.pa', pass: '123', name: 'Pedro Física', role: 'tutor', status: 'suspended' },
-            { id: 6, email: 'nuevo@utp.ac.pa', pass: '123', name: 'Carlos Nuevo', role: 'pending' } // Sin rol
+            { id: 6, email: 'nuevo@utp.ac.pa', pass: '123', name: 'Carlos Nuevo', role: 'pending' }
         ];
 
         let MOCK_TUTORING_SESSIONS = [
@@ -345,10 +421,15 @@
         ];
 
         let MOCK_REQUESTS = [
-            // Peticiones pendientes al tutor
             { id: 201, sessionId: 103, studentId: 4, studentName: 'Ana Estudiante', subject: 'Programación', date: '2026-10-17', time: '09:00 AM', status: 'pending' },
-            // Agenda confirmada
-            { id: 202, sessionId: 101, studentId: 4, studentName: 'Ana Estudiante', subject: 'Cálculo I', date: '2026-10-15', time: '10:00 AM', status: 'confirmed' }
+            { id: 202, sessionId: 101, studentId: 4, studentName: 'Ana Estudiante', subject: 'Cálculo I', date: '2026-10-15', time: '10:00 AM', status: 'confirmed' },
+            // Simulando una sesión ya terminada para que aparezca en el historial
+            { id: 203, sessionId: 104, studentId: 4, studentName: 'Ana Estudiante', subject: 'Matemáticas Básicas', date: '2026-09-20', time: '11:00 AM', status: 'done' }
+        ];
+
+        let MOCK_LOGS = [
+            { id: 1, date: '2026-10-09 08:30 AM', user: 'admin@utp.ac.pa', action: 'Cambio de rol a tutor2@utp.ac.pa' },
+            { id: 2, date: '2026-10-09 09:15 AM', user: 'coord@utp.ac.pa', action: 'Aprobación de Tutor Juan Tutor' }
         ];
 
         let currentUser = null;
@@ -392,7 +473,6 @@
             document.getElementById('global-modal').classList.remove('hidden');
             currentModalCallback = onConfirm;
             
-            // Limpiar listeners anteriores
             const newBtn = confirmBtn.cloneNode(true);
             confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
             
@@ -403,7 +483,7 @@
                     closeModal();
                 });
             } else {
-                newBtn.classList.add('hidden'); // Ocultar si no hay acción
+                newBtn.classList.add('hidden'); 
             }
         }
 
@@ -445,19 +525,16 @@
             const email = document.getElementById('reg-email').value;
             const pass = document.getElementById('reg-password').value;
 
-            // UC1 FE 2.2.2: Validación de correo
             if (!email.endsWith('@utp.ac.pa')) {
                 showToast('Debe usarse el correo institucional (@utp.ac.pa)', 'error');
                 return;
             }
 
-            // UC1 FE 2.2.3: Cuenta existente
             if (MOCK_USERS.find(u => u.email === email)) {
                 showToast('Ya existe una cuenta con este correo', 'error');
                 return;
             }
 
-            // Registrar nuevo estudiante
             const newUser = { id: Date.now(), email, pass, name, role: 'student' };
             MOCK_USERS.push(newUser);
             
@@ -470,13 +547,11 @@
             document.getElementById('auth-layout').classList.add('hidden');
             document.getElementById('app-layout').classList.remove('hidden');
             
-            // Setup Header
             document.getElementById('user-name').textContent = user.name;
             document.getElementById('user-avatar').textContent = user.name.charAt(0);
             
             setupSidebar();
             
-            // Redirigir según rol
             if(user.role === 'student') navigate('view-student-search', 'Buscar Tutorías');
             else if(user.role === 'tutor') navigate('view-tutor-requests', 'Solicitudes');
             else if(user.role === 'coordinator') navigate('view-coord-reports', 'Reportes');
@@ -492,28 +567,28 @@
         }
 
         // ==========================================
-        // 4. NAVEGACIÓN Y SIDEBAR
+        // 4. NAVEGACIÓN Y SIDEBAR MODIFICADA (REMPLAZA PLACEHOLDERS)
         // ==========================================
         const MENUS = {
             student: [
                 { id: 'view-student-search', label: 'Buscar Tutorías', icon: 'magnifying-glass' },
                 { id: 'view-student-requests', label: 'Mis Solicitudes', icon: 'list-dashes' },
-                { id: 'view-placeholder', label: 'Historial', icon: 'clock-counter-clockwise' }
+                { id: 'view-student-history', label: 'Historial', icon: 'clock-counter-clockwise' }
             ],
             tutor: [
                 { id: 'view-tutor-requests', label: 'Solicitudes', icon: 'bell-ringing' },
                 { id: 'view-tutor-agenda', label: 'Mi Agenda', icon: 'calendar-check' },
-                { id: 'view-placeholder', label: 'Disponibilidad', icon: 'clock' }
+                { id: 'view-tutor-availability', label: 'Disponibilidad', icon: 'clock' }
             ],
             coordinator: [
                 { id: 'view-coord-reports', label: 'Reportes', icon: 'chart-bar' },
                 { id: 'view-coord-tutors', label: 'Gestión Tutores', icon: 'users-three' },
-                { id: 'view-placeholder', label: 'Reservas', icon: 'calendar' }
+                { id: 'view-coord-reservations', label: 'Reservas', icon: 'calendar' }
             ],
             admin: [
                 { id: 'view-admin-users', label: 'Usuarios y Roles', icon: 'user-gear' },
-                { id: 'view-placeholder', label: 'Catálogos', icon: 'folder' },
-                { id: 'view-placeholder', label: 'Bitácoras', icon: 'scroll' }
+                { id: 'view-admin-catalogs', label: 'Catálogos', icon: 'folder' },
+                { id: 'view-admin-logs', label: 'Bitácoras', icon: 'scroll' }
             ]
         };
 
@@ -532,14 +607,12 @@
                 a.onclick = (e) => {
                     e.preventDefault();
                     navigate(item.id, item.label);
-                    // Actualizar estilos activos
                     nav.querySelectorAll('a').forEach(link => link.classList.remove('bg-indigo-600', 'text-white'));
                     a.classList.add('bg-indigo-600', 'text-white');
                     a.classList.remove('hover:bg-slate-800');
                 };
                 nav.appendChild(a);
             });
-            // Activar el primero visualmente
             nav.firstChild.classList.add('bg-indigo-600', 'text-white');
         }
 
@@ -549,27 +622,36 @@
             const view = document.getElementById(viewId);
             if(view) {
                 view.classList.remove('hidden');
-                // Llamar funciones de renderizado según la vista
+                
+                // Renders de Estudiante
                 if(viewId === 'view-student-search') renderStudentSearch();
                 if(viewId === 'view-student-requests') renderStudentRequests();
+                if(viewId === 'view-student-history') renderStudentHistory();
+                
+                // Renders de Tutor
                 if(viewId === 'view-tutor-requests') renderTutorRequests();
                 if(viewId === 'view-tutor-agenda') renderTutorAgenda();
+                if(viewId === 'view-tutor-availability') renderTutorAvailability();
+                
+                // Renders de Coordinador
                 if(viewId === 'view-coord-tutors') renderCoordTutors();
+                if(viewId === 'view-coord-reservations') renderCoordReservations();
+                
+                // Renders de Admin
                 if(viewId === 'view-admin-users') renderAdminUsers();
-            } else {
-                document.getElementById('view-placeholder').classList.remove('hidden');
+                if(viewId === 'view-admin-catalogs') renderAdminCatalogs();
+                if(viewId === 'view-admin-logs') renderAdminLogs();
             }
         }
 
         // ==========================================
-        // 5. LÓGICA DE NEGOCIO: ESTUDIANTE
+        // 5. LÓGICA DE NEGOCIO ORIGINAL: ESTUDIANTE
         // ==========================================
         function renderStudentSearch() {
             const container = document.getElementById('student-tutoring-list');
             container.innerHTML = '';
             
             const available = MOCK_TUTORING_SESSIONS.filter(s => s.status === 'available');
-            
             if(available.length === 0) {
                 container.innerHTML = '<p class="text-gray-500 col-span-full">No hay tutorías disponibles en este momento.</p>';
                 return;
@@ -592,22 +674,8 @@
 
         function requestTutoring(sessionId) {
             const session = MOCK_TUTORING_SESSIONS.find(s => s.id === sessionId);
-            // UC7: Solicitar tutoría
-            showModal(
-                'Confirmar Solicitud',
-                `¿Deseas solicitar la tutoría de <b>${session.subject}</b> con ${session.tutor} para el ${session.date}?`,
-                () => {
-                    // Simular creación de request
-                    MOCK_REQUESTS.push({
-                        id: Date.now(),
-                        sessionId: session.id,
-                        studentId: currentUser.id,
-                        studentName: currentUser.name,
-                        subject: session.subject,
-                        date: session.date,
-                        time: session.time,
-                        status: 'pending'
-                    });
+            showModal('Confirmar Solicitud', `¿Deseas solicitar la tutoría de <b>${session.subject}</b> con ${session.tutor} para el ${session.date}?`, () => {
+                    MOCK_REQUESTS.push({ id: Date.now(), sessionId: session.id, studentId: currentUser.id, studentName: currentUser.name, subject: session.subject, date: session.date, time: session.time, status: 'pending' });
                     showToast('Solicitud enviada al tutor (UC7)', 'success');
                 }
             );
@@ -617,8 +685,7 @@
             const tbody = document.getElementById('student-requests-table');
             tbody.innerHTML = '';
             
-            const myRequests = MOCK_REQUESTS.filter(r => r.studentId === currentUser.id && r.status !== 'cancelled');
-            
+            const myRequests = MOCK_REQUESTS.filter(r => r.studentId === currentUser.id && r.status !== 'cancelled' && r.status !== 'done');
             if(myRequests.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">No tienes solicitudes activas.</td></tr>';
                 return;
@@ -644,28 +711,49 @@
         }
 
         function cancelRequest(reqId) {
-            // UC8: Cancelar solicitud
-            showModal(
-                'Cancelar Tutoría',
-                '¿Estás seguro de que deseas cancelar esta solicitud? Se liberará el cupo.',
-                () => {
+            showModal('Cancelar Tutoría', '¿Estás seguro de que deseas cancelar esta solicitud? Se liberará el cupo.', () => {
                     const req = MOCK_REQUESTS.find(r => r.id === reqId);
                     if(req) req.status = 'cancelled';
                     showToast('Solicitud cancelada (UC8)', 'info');
                     renderStudentRequests();
-                },
-                'Sí, Cancelar'
+                }, 'Sí, Cancelar'
             );
         }
 
+        // NUEVO RENDEREIZADO: HISTORIAL ESTUDIANTE
+        function renderStudentHistory() {
+            const tbody = document.getElementById('student-history-table');
+            tbody.innerHTML = '';
+            
+            const pastRequests = MOCK_REQUESTS.filter(r => r.studentId === currentUser.id && (r.status === 'done' || r.status === 'cancelled'));
+            if(pastRequests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay registros en tu historial.</td></tr>';
+                return;
+            }
+
+            pastRequests.forEach(req => {
+                const statusBadge = req.status === 'done' 
+                    ? '<span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Realizada</span>'
+                    : '<span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">Cancelada</span>';
+
+                tbody.innerHTML += `
+                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                        <td class="p-4 font-medium text-gray-800">${req.subject}</td>
+                        <td class="p-4 text-gray-600">Tutor Asignado</td>
+                        <td class="p-4 text-gray-600">${req.date}</td>
+                        <td class="p-4">${statusBadge}</td>
+                    </tr>
+                `;
+            });
+        }
+
         // ==========================================
-        // 6. LÓGICA DE NEGOCIO: TUTOR
+        // 6. LÓGICA DE NEGOCIO ORIGINAL: TUTOR
         // ==========================================
         function renderTutorRequests() {
             const container = document.getElementById('tutor-pending-requests');
             container.innerHTML = '';
             
-            // Simular búsqueda buscando tutorías que me pertenecen y ver solicitudes vinculadas a ellas
             const mySessionIds = MOCK_TUTORING_SESSIONS.filter(s => s.tutorId === currentUser.id).map(s => s.id);
             const pendingReqs = MOCK_REQUESTS.filter(r => r.status === 'pending' && mySessionIds.includes(r.sessionId));
 
@@ -692,7 +780,6 @@
         }
 
         function respondRequest(reqId, action) {
-            // UC9: Gestionar Solicitud
             const req = MOCK_REQUESTS.find(r => r.id === reqId);
             if(action === 'rejected') {
                 showModal('Rechazar Solicitud', '<p>Por favor ingresa el motivo del rechazo:</p><input type="text" class="w-full mt-2 px-3 py-2 border rounded" placeholder="Ej: Conflicto de horario">', () => {
@@ -735,14 +822,10 @@
         }
 
         function registerResult(reqId) {
-            // UC10: Gestionar tutorías aceptadas (Registrar resultado)
             const formHTML = `
                 <div class="space-y-3">
                     <label class="block text-sm">Estado de Asistencia:</label>
-                    <select class="w-full px-3 py-2 border rounded">
-                        <option>Asistió</option>
-                        <option>No Asistió</option>
-                    </select>
+                    <select class="w-full px-3 py-2 border rounded"><option>Asistió</option><option>No Asistió</option></select>
                     <label class="block text-sm">Tema Tratado:</label>
                     <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Ej: Derivadas parciales" required>
                     <label class="block text-sm">Observaciones:</label>
@@ -751,22 +834,73 @@
             `;
             showModal('Registrar Resultado de Sesión', formHTML, () => {
                 const req = MOCK_REQUESTS.find(r => r.id === reqId);
-                req.status = 'done'; // Simular completado
+                req.status = 'done';
                 showToast('Resultado guardado exitosamente (UC10)', 'success');
                 renderTutorAgenda();
             }, 'Guardar Reporte');
         }
 
+        // NUEVO RENDEREIZADO: DISPONIBILIDAD DEL TUTOR
+        function renderTutorAvailability() {
+            const container = document.getElementById('tutor-availability-list');
+            container.innerHTML = '';
+            const mySessions = MOCK_TUTORING_SESSIONS.filter(s => s.tutorId === currentUser.id);
+            
+            if(mySessions.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 col-span-full">No has registrado horarios disponibles.</p>';
+                return;
+            }
+
+            mySessions.forEach(s => {
+                container.innerHTML += `
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-gray-800">${s.subject}</div>
+                            <div class="text-sm text-gray-500"><i class="ph ph-clock"></i> ${s.date} - ${s.time}</div>
+                        </div>
+                        <button class="text-red-500 hover:text-red-700"><i class="ph ph-trash text-lg"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function addAvailability() {
+            const formHTML = `
+                <div class="space-y-3">
+                    <label class="block text-sm">Asignatura:</label>
+                    <input type="text" id="av-subject" class="w-full px-3 py-2 border rounded" placeholder="Ej: Cálculo I" required>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-sm">Fecha:</label><input type="date" id="av-date" class="w-full px-3 py-2 border rounded" required></div>
+                        <div><label class="block text-sm">Hora:</label><input type="time" id="av-time" class="w-full px-3 py-2 border rounded" required></div>
+                    </div>
+                    <label class="block text-sm">Modalidad:</label>
+                    <select id="av-modality" class="w-full px-3 py-2 border rounded"><option>Presencial</option><option>Virtual</option></select>
+                </div>
+            `;
+            showModal('Añadir Disponibilidad', formHTML, () => {
+                MOCK_TUTORING_SESSIONS.push({
+                    id: Date.now(),
+                    subject: document.getElementById('av-subject').value,
+                    tutor: currentUser.name,
+                    tutorId: currentUser.id,
+                    date: document.getElementById('av-date').value,
+                    time: document.getElementById('av-time').value,
+                    status: 'available',
+                    modality: document.getElementById('av-modality').value
+                });
+                showToast('Bloque de disponibilidad agregado exitosamente', 'success');
+                renderTutorAvailability();
+            }, 'Agregar');
+        }
+
         // ==========================================
-        // 7. LÓGICA DE NEGOCIO: COORDINADOR & ADMIN
+        // 7. LÓGICA DE NEGOCIO ORIGINAL: COORDINADOR & ADMIN
         // ==========================================
-        
         function renderCoordTutors() {
             const tbody = document.getElementById('coord-tutors-table');
             tbody.innerHTML = '';
             
             const tutors = MOCK_USERS.filter(u => u.role === 'tutor');
-            
             tutors.forEach(tutor => {
                 const statusBadge = tutor.status === 'active' 
                     ? '<span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Aprobado</span>'
@@ -788,18 +922,72 @@
         }
 
         function toggleTutorStatus(tutorId, newStatus) {
-            // UC12: Gestionar tutores
             const tutor = MOCK_USERS.find(u => u.id === tutorId);
             tutor.status = newStatus;
             showToast(`Estado del tutor actualizado a: ${newStatus === 'active' ? 'Aprobado' : 'Suspendido'} (UC12)`, 'success');
             renderCoordTutors();
         }
 
+        // NUEVO RENDEREIZADO: RESERVAS GLOBALES DEL COORDINADOR
+        function renderCoordReservations() {
+            const tbody = document.getElementById('coord-reservations-table');
+            tbody.innerHTML = '';
+            
+            if(MOCK_REQUESTS.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">No hay reservas registradas.</td></tr>';
+                return;
+            }
+
+            MOCK_REQUESTS.forEach(req => {
+                const statusColors = {
+                    pending: 'bg-yellow-100 text-yellow-800', confirmed: 'bg-blue-100 text-blue-800',
+                    done: 'bg-green-100 text-green-800', cancelled: 'bg-red-100 text-red-800', rejected: 'bg-gray-200 text-gray-800'
+                };
+                const statusBadge = `<span class="px-2 py-1 text-xs rounded-full ${statusColors[req.status] || 'bg-gray-100'}">${req.status}</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                        <td class="p-4 font-medium text-gray-800">${req.date} ${req.time}</td>
+                        <td class="p-4 text-gray-600">${req.studentName}</td>
+                        <td class="p-4 text-gray-600">${req.subject}</td>
+                        <td class="p-4">${statusBadge}</td>
+                        <td class="p-4 text-right">
+                            <button onclick="manageReservation(${req.id})" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Intervenir</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function manageReservation(reqId) {
+            const formHTML = `
+                <div class="space-y-3">
+                    <p class="text-sm text-gray-600 mb-2">Como coordinador, puedes intervenir en esta reserva en caso de conflicto (UC9 y UC10).</p>
+                    <label class="block text-sm font-medium">Acción a tomar:</label>
+                    <select id="res-action" class="w-full px-3 py-2 border rounded">
+                        <option value="reassign">Reasignar a otro tutor</option>
+                        <option value="cancel">Forzar Cancelación</option>
+                    </select>
+                    <label class="block text-sm font-medium mt-2">Motivo de intervención:</label>
+                    <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Ej: Ausencia del tutor original" required>
+                </div>
+            `;
+            showModal('Intervenir Reserva', formHTML, () => {
+                const req = MOCK_REQUESTS.find(r => r.id === reqId);
+                const action = document.getElementById('res-action').value;
+                if(action === 'cancel') req.status = 'cancelled';
+                showToast('Intervención realizada y registrada en el sistema', 'success');
+                renderCoordReservations();
+            }, 'Aplicar Cambios');
+        }
+
+        // ==========================================
+        // 8. VISTAS DEL ADMINISTRADOR
+        // ==========================================
         function renderAdminUsers() {
             const tbody = document.getElementById('admin-users-table');
             tbody.innerHTML = '';
             
-            // Mostrar trabajadores (excluir estudiantes para este panel específico según contexto)
             const workers = MOCK_USERS.filter(u => u.role !== 'student');
             
             workers.forEach(worker => {
@@ -822,28 +1010,25 @@
         }
 
         function changeRole(userId, newRole) {
-            // UC3: Gestionar Roles
-            
-            // Simular FE 2.2.1 Cambio no permitido (Evitar quitar el último admin)
             if (newRole !== 'admin') {
                 const adminCount = MOCK_USERS.filter(u => u.role === 'admin' && u.id !== userId).length;
                 if (adminCount === 0) {
                     showToast('Debe existir al menos un administrador activo (UC3 FE 2.2.1)', 'error');
-                    renderAdminUsers(); // Revertir select visual
+                    renderAdminUsers(); 
                     return;
                 }
             }
 
             const user = MOCK_USERS.find(u => u.id === userId);
             user.role = newRole;
-            // Si el rol es tutor, asegurarnos que tenga estado
             if(newRole === 'tutor' && !user.status) user.status = 'active';
 
+            // Agregar a la bitácora
+            MOCK_LOGS.unshift({ id: Date.now(), date: new Date().toLocaleString(), user: currentUser.email, action: `Cambió el rol de ${user.email} a ${newRole}` });
             showToast(`Rol actualizado a ${newRole} correctamente (UC3)`, 'success');
         }
 
         function openRegisterWorkerModal() {
-            // UC2: Registrar Trabajador
             const formHTML = `
                 <div class="space-y-3">
                     <div><label class="block text-sm">Nombre Completo:</label><input id="rw-name" type="text" class="w-full px-3 py-2 border rounded" required></div>
@@ -864,11 +1049,48 @@
                     return;
                 }
 
-                MOCK_USERS.push({
-                    id: Date.now(), name, email, pass: '123', role: 'pending'
-                });
+                MOCK_USERS.push({ id: Date.now(), name, email, pass: '123', role: 'pending' });
+                MOCK_LOGS.unshift({ id: Date.now(), date: new Date().toLocaleString(), user: currentUser.email, action: `Registró al trabajador ${email}` });
                 showToast('Trabajador registrado pendiente de asignar rol (UC2)', 'success');
                 renderAdminUsers();
+            });
+        }
+
+        // NUEVO RENDEREIZADO: CATÁLOGOS DEL ADMIN
+        function renderAdminCatalogs() {
+            const container = document.getElementById('admin-catalogs-content');
+            container.innerHTML = `
+                <div class="bg-white p-5 border rounded-xl shadow-sm">
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">Asignaturas</h3>
+                    <p class="text-sm text-gray-500 mb-4">Gestiona las materias que pueden recibir tutorías.</p>
+                    <button class="w-full py-2 bg-gray-100 text-gray-700 font-medium rounded hover:bg-gray-200">Administrar Asignaturas</button>
+                </div>
+                <div class="bg-white p-5 border rounded-xl shadow-sm">
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">Recintos / Aulas</h3>
+                    <p class="text-sm text-gray-500 mb-4">Administra los espacios físicos para las sesiones presenciales.</p>
+                    <button class="w-full py-2 bg-gray-100 text-gray-700 font-medium rounded hover:bg-gray-200">Administrar Recintos</button>
+                </div>
+            `;
+        }
+
+        // NUEVO RENDEREIZADO: BITÁCORAS DEL ADMIN
+        function renderAdminLogs() {
+            const tbody = document.getElementById('admin-logs-table');
+            tbody.innerHTML = '';
+            
+            if(MOCK_LOGS.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="p-4 text-center text-gray-500">No hay registros en la bitácora.</td></tr>';
+                return;
+            }
+
+            MOCK_LOGS.forEach(log => {
+                tbody.innerHTML += `
+                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                        <td class="p-4 text-gray-600 text-sm">${log.date}</td>
+                        <td class="p-4 font-medium text-gray-800 text-sm">${log.user}</td>
+                        <td class="p-4 text-gray-600 text-sm">${log.action}</td>
+                    </tr>
+                `;
             });
         }
     </script>
